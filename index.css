@@ -1,0 +1,424 @@
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            overflow-x: hidden;
+            background-color: #f9fafb;
+            color: #1f2937;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .card-hover {
+            transition: all 0.4s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .hero-shape {
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        
+        .feature-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-15px) scale(1.03);
+        }
+        
+        .progress-bar {
+            transition: width 2s ease-in-out;
+        }
+        
+        /* Particle canvas styling */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+/*services section*/
+  
+
+
+  :root{
+    --g1: #6366f1; /* primary */
+    --g2: #06b6d4;
+    --g3: #f59e0b;
+    --g4: #10b981; /* secondary */
+  }
+
+  /* Animated gradient text (use on <span class="text-gradient">Text</span>) */
+  .text-gradient{
+    background: linear-gradient(90deg, var(--g1), var(--g2), var(--g3), var(--g4));
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent !important; /* ensure it wins over other color rules */
+    animation: gradientShift 6s ease infinite;
+    display: inline-block;
+    will-change: background-position;
+  }
+
+  /* Animated gradient background (use on small squares / badges: .gradient-bg) */
+  .gradient-bg{
+    background: linear-gradient(135deg, var(--g1), var(--g2), var(--g3), var(--g4));
+    background-size: 400% 400%;
+    animation: gradientShift 6s ease infinite;
+    will-change: background-position, transform;
+    /* keep the icon white */
+    color: #fff;
+  }
+
+  /* keyframes */
+  @keyframes gradientShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* feature card hover lift */
+  .feature-card {
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s;
+    will-change: transform, box-shadow;
+  }
+  .feature-card:hover {
+    transform: translateY(-10px) scale(1.01);
+    box-shadow: 0 20px 40px rgba(16,24,40,0.08);
+  }
+
+  /* subtle gradient hover for the "Learn More" links that use text-primary */
+  .feature-card a.text-primary {
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .feature-card a.text-primary::after{
+    content: "";
+    position: absolute;
+    left: -40%;
+    top: 0;
+    width: 180%;
+    height: 100%;
+    transform: skewX(-12deg);
+    background: linear-gradient(90deg, rgba(99,102,241,0.06), rgba(6,182,212,0.06), rgba(245,158,11,0.06));
+    transition: transform .55s ease, opacity .3s;
+    z-index: -1;
+    opacity: 0;
+  }
+  .feature-card a.text-primary:hover::after{
+    transform: translateX(20%);
+    opacity: 1;
+  }
+
+  /* ensure fontawesome icons inside .gradient-bg remain visible */
+  .gradient-bg i, .gradient-bg svg { color: #fff; }
+
+  /* small accessibility / rendering tweak */
+  .text-gradient, .gradient-bg { -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+
+/*Services section*/
+
+
+.features-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      max-width: 1200px;
+      width: 100%;
+      padding: 20px;
+    }
+
+    .feature-card {
+      position: relative;
+      background: #fff;
+      padding: 40px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      overflow: hidden;
+      transition: all 0.3s ease-in-out;
+      z-index: 1;
+    }
+
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #9bddff ;
+      transform: translateY(100%);
+      transition: transform 0.4s ease-in-out;
+      z-index: -1;
+    }
+
+    .feature-card:hover::before {
+      transform: translateY(0);
+    }
+
+    .feature-card i {
+      font-size: 50px;
+      color: #ff6600;
+      margin-bottom: 15px;
+      transition: color 0.3s ease;
+    }
+
+    .feature-card:hover i {
+      color: #fff;
+    }
+
+    .feature-card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #222;
+      transition: color  0.3s ease;
+    }
+
+    .feature-card:hover h3 {
+      color: #fff;
+    }
+
+    .feature-card p {
+      font-size: 15px;
+      color: #555;
+      transition: color 0.3s ease;
+    }
+
+    .feature-card:hover p {
+      color: #f1f1f1;
+    }
+.about-image {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/*Navbar section*/
+
+/* icon + text hover animation */
+.nav-link:hover {
+  color: #6366f1;
+  transform: translateY(-2px) scale(1.05);
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+.nav-link i {
+  transition: transform 0.4s ease, color 0.4s;
+}
+.nav-link:hover i {
+  transform: rotate(10deg) scale(1.2);
+  color: #06b6d4;
+}
+
+/* Keyframes for logo gradient animation */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* underline animation */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #6366f1, #06b6d4, #f59e0b, #10b981);
+  transition: width 0.4s ease;
+  border-radius: 2px;
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, #6366f1, #06b6d4, #f59e0b, #10b981);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 6s ease infinite;
+}
+
+/* Nav link style */
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Gradient text */
+.text-gradient {
+  background: linear-gradient(90deg, #6366f1, #06b6d4, #f59e0b, #10b981);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 6s ease infinite;
+}
+
+/* Animations */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 15px rgba(99,102,241,0.6), 0 0 30px rgba(6,182,212,0.4); }
+  50% { box-shadow: 0 0 25px rgba(16,185,129,0.8), 0 0 45px rgba(245,158,11,0.5); }
+}
+
+/* Utility */
+.animate-fadeInUp { animation: fadeInUp 1.2s ease forwards; }
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-glow { animation: glow 3s ease-in-out infinite; }
+
+
+
+
+/* Flip container */
+.flip-container {
+  perspective: 1000px; /* Enables 3D */
+}
+
+.flip-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 1s ease;
+}
+
+.flip-container:hover .flip-card {
+  transform: rotateY(180deg);
+}
+
+/* Front & back sides */
+.flip-front,
+.flip-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Hide backside when facing away */
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.flip-back {
+  transform: rotateY(180deg);
+}
+
+.flip-container {
+  perspective: 1000px;
+}
+
+.flip-card {
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flip-container:hover .flip-card {
+  transform: rotateY(180deg);
+}
+
+.flip-front,
+.flip-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.flip-back {
+  transform: rotateY(180deg);
+}
+
+
+
+#contact-modal {
+  transition: opacity 0.3s ease;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </style>

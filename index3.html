@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mediacom Group — Services & Infrastructure (Premium)</title>
+
+  <!-- Fonts & icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root{
+      --bg:#f8fbff;
+      --card:#ffffff;
+      --muted:#606770;
+      --accent-1:#2563eb; /* blue */
+      --accent-2:#9333ea; /* purple */
+      --accent-3:#fb923c; /* orange */
+      --glass: rgba(255,255,255,0.75);
+      --glass-strong: rgba(255,255,255,0.9);
+      --shadow: 0 10px 30px rgba(16,24,40,0.06);
+      --rounded: 14px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background:var(--bg);
+      color:#0f1724;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;
+      line-height:1.45;
+    }
+
+    /* 3D animated background (multi-layer gradient + floating blobs) */
+    .bg-wrap{
+      position:fixed; inset:0; z-index:-100; pointer-events:none; overflow:hidden;
+      transform:translateZ(0);
+    }
+
+    /* large 3D gradient plane */
+    .plane{
+      position:absolute;
+      width:160vmax; height:160vmax;
+      left:50%; top:50%;
+      transform:translate(-50%,-50%) rotate(12deg);
+      background:
+        radial-gradient(1200px at 10% 20%, rgba(99,102,241,0.12), transparent 8%),
+        radial-gradient(900px at 85% 80%, rgba(59,130,246,0.08), transparent 10%),
+        linear-gradient(120deg, rgba(37,99,235,0.06), rgba(147,51,234,0.04) 45%, rgba(251,146,60,0.03) 80%);
+      filter:blur(30px) saturate(110%);
+      animation: planeMove 22s linear infinite alternate;
+    }
+
+    @keyframes planeMove{
+      from{transform:translate(-48%,-52%) rotate(10deg) scale(1)}
+      to{transform:translate(-52%,-48%) rotate(14deg) scale(1.04)}
+    }
+
+    /* floating soft shapes for depth */
+    .blob{
+      position:absolute; border-radius:50%;
+      filter:blur(24px) opacity(.75);
+      mix-blend-mode:screen;
+      will-change:transform;
+      animation: floaty 10s ease-in-out infinite;
+    }
+    .blob.b1{width:36vmax;height:36vmax; left:-6vmax; top:6vmax; background:linear-gradient(180deg, rgba(37,99,235,0.14), rgba(147,51,234,0.12)); animation-duration:20s}
+    .blob.b2{width:26vmax;height:26vmax; right:-8vmax; top:12vmax; background:linear-gradient(180deg, rgba(251,146,60,0.12), rgba(147,51,234,0.08)); animation-duration:24s}
+    .blob.b3{width:18vmax;height:18vmax; left:10vmax; bottom:-6vmax; background:linear-gradient(180deg, rgba(96,165,250,0.08), rgba(251,146,60,0.06)); animation-duration:18s}
+    @keyframes floaty{
+      0%{transform:translateY(0) rotate(0deg)}
+      50%{transform:translateY(-30px) rotate(8deg)}
+      100%{transform:translateY(0) rotate(0deg)}
+    }
+
+    /* Page layout */
+    .wrap{max-width:1200px; margin:40px auto; padding:28px}
+    header{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:18px}
+    .logo{display:flex;align-items:center;gap:12px}
+    .logo i{font-size:34px; color:var(--accent-2); transform:translateZ(0); filter:drop-shadow(0 6px 18px rgba(147,51,234,0.12))}
+    .brand{font-weight:700; font-size:20px; letter-spacing:.4px; color:#0b1220}
+    .subtle{color:var(--muted); font-size:13px}
+
+    /* hero */
+    .hero{
+      display:grid; grid-template-columns:1fr 420px; gap:28px; align-items:center; margin-bottom:34px;
+    }
+    .hero-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.65));
+      border-radius:var(--rounded);
+      box-shadow:var(--shadow);
+      padding:34px;
+      border:1px solid rgba(16,24,40,0.04);
+      backdrop-filter: blur(8px) saturate(120%);
+      transform-origin:center;
+      transition:transform .35s ease;
+    }
+    .hero-card:hover{transform:translateY(-6px) scale(1.003)}
+
+    .hero h1{
+      margin:0 0 10px 0; font-size:28px; line-height:1.05;
+      background:linear-gradient(90deg,var(--accent-1),var(--accent-2),var(--accent-3));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      font-weight:700;
+      text-wrap:balance;
+      letter-spacing:-0.2px;
+    }
+    .hero p{margin:0;color:var(--muted);font-size:15px}
+
+    /* quick stats box */
+    .stat-grid{display:flex; gap:12px; margin-top:16px; flex-wrap:wrap}
+    .stat{flex:1; min-width:120px; padding:12px 14px; border-radius:12px; background:var(--glass); border:1px solid rgba(11,17,28,0.04); text-align:center}
+    .stat .num{font-size:20px; font-weight:700; background:linear-gradient(90deg,var(--accent-1),var(--accent-3)); -webkit-background-clip:text; color:transparent}
+    .stat .lbl{font-size:12px;color:var(--muted); margin-top:4px}
+
+    /* content area */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 380px;
+      gap:26px;
+      align-items:start;
+    }
+
+    /* left column: services & timeline */
+    .card{background:var(--card); border-radius:var(--rounded); padding:18px; box-shadow:var(--shadow); border:1px solid rgba(16,24,40,0.04)}
+    h2.section{margin:0 0 14px 0; font-size:18px; color:#0b1220}
+
+    /* services list (cards) */
+    .services{
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px;
+    }
+    .svc{
+      padding:14px; border-radius:12px; background:linear-gradient(180deg, rgba(246,249,255,0.9), rgba(255,255,255,0.95));
+      border:1px solid rgba(8,12,20,0.03); transition:transform .28s ease, box-shadow .28s ease;
+      display:flex; gap:12px; align-items:flex-start;
+    }
+    .svc:hover{transform:translateY(-8px); box-shadow:0 18px 45px rgba(37,99,235,0.06)}
+    .svc .ico{width:46px; height:46px; border-radius:10px; display:grid; place-items:center; font-size:18px;
+      background:linear-gradient(120deg,var(--accent-1),var(--accent-2));
+      color:white; box-shadow:0 8px 20px rgba(37,99,235,0.12)}
+    .svc h3{margin:0; font-size:15px}
+    .svc p{margin:6px 0 0 0; font-size:13px; color:var(--muted)}
+
+    /* timeline */
+    .timeline{margin-top:18px; position:relative; padding-left:8px}
+    .timeline::before{content:""; position:absolute; left:12px; top:0; bottom:0; width:3px; background:linear-gradient(180deg,var(--accent-1),var(--accent-2)); border-radius:6px}
+    .t-item{position:relative; padding:12px 12px 12px 36px; margin-bottom:10px; background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.98)); border-radius:10px; border:1px solid rgba(16,24,40,0.04)}
+    .t-item::before{content:""; position:absolute; left:4px; top:14px; width:18px;height:18px;border-radius:50%; background:var(--accent-2); box-shadow:0 6px 16px rgba(147,51,234,0.09)}
+    .t-item h4{margin:0; font-size:14px; color:#0b1220}
+    .t-item p{margin:6px 0 0 0; color:var(--muted); font-size:13px}
+
+    /* right column: details, research & links */
+    .meta {display:flex; flex-direction:column; gap:12px}
+    .meta .mini{display:flex; gap:10px; align-items:center; padding:10px; border-radius:10px; background:linear-gradient(180deg,var(--glass),var(--glass-strong)); border:1px solid rgba(11,17,28,0.04)}
+    .mini i{font-size:18px; color:var(--accent-1)}
+    .mini .txt{font-size:13px; color:var(--muted)}
+
+    /* deep-dive section */
+    .deep{margin-top:14px; padding:14px; background:linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.98)); border-radius:12px; border:1px solid rgba(16,24,40,0.04)}
+    .deep h3{margin:0 0 8px 0; font-size:15px}
+    .deep p{margin:0 0 10px 0; color:var(--muted); font-size:13px}
+
+    /* badges */
+    .badge{display:inline-block; padding:6px 10px; border-radius:999px; background:linear-gradient(90deg,var(--accent-1),var(--accent-3)); color:white; font-size:12px; font-weight:600}
+
+    footer{margin-top:40px; text-align:center;color:var(--muted); font-size:13px; padding:40px 0 12px}
+
+    /* reveal animation */
+    .reveal{opacity:0; transform:translateY(22px) scale(.995); transition:all .66s cubic-bezier(.2,.9,.25,1)}
+    .reveal.visible{opacity:1; transform:translateY(0) scale(1)}
+
+    /* small screens */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr; text-align:left}
+      .grid{grid-template-columns:1fr}
+      .wrap{padding:18px}
+      .blob{display:none}
+    }
+
+    @media (max-width:520px){
+      h1{font-size:20px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- animated 3D background layers -->
+  <div class="bg-wrap" aria-hidden="true">
+    <div class="plane" role="presentation"></div>
+    <div class="blob b1" role="presentation"></div>
+    <div class="blob b2" role="presentation"></div>
+    <div class="blob b3" role="presentation"></div>
+  </div>
+
+  <div class="wrap">
+    <header>
+      <div class="logo">
+        <i class="fas fa-satellite-dish" aria-hidden="true"></i>
+        <div>
+          <div class="brand">Mediacom Group</div>
+          <div class="subtle">Connecting Faisalabad & surrounding regions since 1995</div>
+        </div>
+      </div>
+
+      <div class="subtle">Premium Infrastructure • FTTH • Dark Fiber • Data Center</div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-card reveal">
+        <h1>Extensive Fiber Infrastructure & Premium Connectivity</h1>
+        <p>We build, operate and maintain high-capacity optical fiber networks plus FTTH and enterprise connectivity. Our solutions are engineered for reliability, security, and scalability — tailored for Faisalabad and surrounding regions.</p>
+
+        <div class="stat-grid" style="margin-top:18px">
+          <div class="stat">
+            <div class="num" data-count="500000">500,000+</div>
+            <div class="lbl">Cable TV Subscribers</div>
+          </div>
+          <div class="stat">
+            <div class="num" data-count="30000">30,000+</div>
+            <div class="lbl">FTTH Subscribers</div>
+          </div>
+          <div class="stat">
+            <div class="num" data-count="99.9">99.9%</div>
+            <div class="lbl">Uptime SLA</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="card reveal" aria-labelledby="quick-about">
+        <div id="quick-about">
+          <div style="display:flex; gap:10px; align-items:center; justify-content:space-between">
+            <div>
+              <div style="font-weight:700">Why choose us?</div>
+              <div class="subtle" style="font-size:13px">Local expertise, modern OSP engineering, and end-to-end project delivery.</div>
+            </div>
+            <div class="badge">Faisalabad-first</div>
+          </div>
+
+          <div style="margin-top:12px" class="meta">
+            <div class="mini"><i class="fas fa-cog"></i><div class="txt">OSP planning, splicing, testing & commissioning</div></div>
+            <div class="mini"><i class="fas fa-shield-alt"></i><div class="txt">Dark fiber & secure dedicated networks</div></div>
+            <div class="mini"><i class="fas fa-server"></i><div class="txt">Data center co-location & managed hosting</div></div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- MAIN GRID -->
+    <main class="grid">
+      <!-- LEFT: Services + timeline -->
+      <div>
+        <section class="card reveal" aria-labelledby="services-title">
+          <h2 id="services-title" class="section">Our Services — brief & detailed</h2>
+
+          <div class="services" style="margin-top:12px">
+            <article class="svc" aria-labelledby="s1">
+              <div class="ico"><i class="fas fa-network-wired" aria-hidden="true"></i></div>
+              <div>
+                <h3 id="s1">Extensive Optical Fiber Infrastructure</h3>
+                <p>Comprehensive backbone & access fiber across Faisalabad and suburbs — OSP ducts, single-mode fiber, splicing, and maintenance for low-latency, high-capacity networks.</p>
+              </div>
+            </article>
+
+            <article class="svc" aria-labelledby="s2">
+              <div class="ico"><i class="fas fa-exchange-alt" aria-hidden="true"></i></div>
+              <div>
+                <h3 id="s2">Point-to-Point Fiber & Wireless</h3>
+                <p>Dedicated PtP links for offices and enterprise sites — symmetric bandwidth, low jitter and optional mmWave links when fiber isn’t feasible.</p>
+              </div>
+            </article>
+
+            <article class="svc" aria-labelledby="s3">
+              <div class="ico"><i class="fas fa-sitemap" aria-hidden="true"></i></div>
+              <div>
+                <h3 id="s3">Point-to-Multipoint Fiber & Wireless</h3>
+                <p>Hub-and-spoke network architectures to serve many endpoints from a central node — ideal for neighborhoods, campuses and multi-site deployments.</p>
+              </div>
+            </article>
+
+            <article class="svc" aria-labelledby="s4">
+              <div class="ico"><i class="fas fa-toggle-off" aria-hidden="true"></i></div>
+              <div>
+                <h3 id="s4">Dark Core Connectivity</h3>
+                <p>Lease unlit fiber strands (dark fiber) for total control and future-proof scaling. Clients can light fibers with their own optical equipment for security and predictable performance.</p>
+              </div>
+            </article>
+
+            <article class="svc" aria-labelledby="s5">
+              <div class="ico"><i class="fas fa-database" aria-hidden="true"></i></div>
+              <div>
+                <h3 id="s5">Data Centre & Co-location</h3>
+                <p>Secure racks, redundant power/cooling and high-density connectivity. Colocation for businesses that need enterprise-grade uptime without building a data center.</p>
+              </div>
+            </article>
+
+            <article class="svc" aria-labelledby="s6">
+              <div class="ico"><i class="fas fa-home" aria-hidden="true"></i></div>
+              <div>
+                <h3 id="s6">FTTH — GPON Services</h3>
+                <p>Fiber-to-the-home using GPON architecture for multi-gigabit downstream and reliable home broadband with modern ONTs and managed Wi-Fi options.</p>
+              </div>
+            </article>
+
+            <article class="svc" aria-labelledby="s7">
+              <div class="ico"><i class="fas fa-wifi" aria-hidden="true"></i></div>
+              <div>
+                <h3 id="s7">Bandwidth Provider (Raw & CDN)</h3>
+                <p>Wholesale bandwidth (sym/asym) plus CDN caching for faster content delivery — reduces latency for streaming, software updates and high-traffic sites.</p>
+              </div>
+            </article>
+
+            <article class="svc" aria-labelledby="s8">
+              <div class="ico"><i class="fas fa-handshake" aria-hidden="true"></i></div>
+              <div>
+                <h3 id="s8">Dealer's Panel ISP Services</h3>
+                <p>Dealer panels & dashboards for resellers: client management, billing, and wholesale plans — accelerate market reach with local support and wholesale rates.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- Timeline / Industry leadership -->
+        <section class="card reveal" style="margin-top:18px" aria-labelledby="timeline-title">
+          <h2 id="timeline-title" class="section">Timeline & Industry Highlights</h2>
+
+          <div class="timeline" role="list">
+            <div class="t-item" role="listitem">
+              <h4>Our Beginning (1995)</h4>
+              <p>Started as a regional communications provider, growing into multiple ventures: cable TV, fiber deployments, and internet services across Faisalabad.</p>
+            </div>
+
+            <div class="t-item" role="listitem">
+              <h4>McSOL Subsidiary</h4>
+              <p>Focused on optical fiber infrastructure, TV network services (digital & analog), and FTTH broadband in Faisalabad.</p>
+            </div>
+
+            <div class="t-item" role="listitem">
+              <h4>Industry Leadership</h4>
+              <p>Large subscriber base across cable TV and FTTH; recognized for network reliability, strong OSP engineering and single-window operations.</p>
+            </div>
+
+            <div class="t-item" role="listitem">
+              <h4>OSP & Engineering</h4>
+              <p>End-to-end OSP services: planning, design, trenching, splicing, testing, commissioning and maintenance for fiber networks.</p>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- RIGHT: research, stats, trends -->
+      <aside>
+        <div class="card reveal">
+          <h2 class="section">Industry Trends & Local Context</h2>
+
+          <div class="deep">
+            <h3>Dark Fiber — Why it matters</h3>
+            <p>Dark fiber leasing gives organizations control over their physical medium, stronger security, and dedicated bandwidth. It's widely adopted by enterprises and government departments for private networks and inter-datacenter links.</p>
+
+            <h3 style="margin-top:8px">FTTH & GPON evolution</h3>
+            <p>GPON (ITU-T G.984) remains the standard for many deployments; newer XG-PON (10Gbps) is rolling out for higher capacity. GPON split ratios and ONT quality determine customer experience.</p>
+
+            <h3 style="margin-top:8px">Bandwidth & CDN</h3>
+            <p>Combining raw bandwidth with CDN caching reduces backbone costs and improves response time for media-heavy content and software distribution — a must for modern ISPs.</p>
+          </div>
+
+          <div style="margin-top:12px" class="meta">
+            <div class="mini"><i class="fas fa-globe"></i><div class="txt">Backbone upgrades & national fiber programs expanding deep fiberization</div></div>
+            <div class="mini"><i class="fas fa-balance-scale"></i><div class="txt">Regulatory guidance encourages secure dark-fiber use for sensitive government data</div></div>
+            <div class="mini"><i class="fas fa-microchip"></i><div class="txt">Enterprise GPON & XG-PON adoption for multi-gigabit services</div></div>
+          </div>
+        </div>
+
+        <div class="card reveal" style="margin-top:16px">
+          <h2 class="section">Quick Specs & Best Practices</h2>
+
+          <ul style="margin:0; padding-left:18px; color:var(--muted); font-size:13px; margin-top:8px; line-height:1.6">
+            <li><strong>Fiber types:</strong> Single-mode (G.652) preferred for long-haul & FTTH.</li>
+            <li><strong>GPON speeds:</strong> Down ~2.488 Gbps / Up ~1.244 Gbps (per GPON); XG-PON offers 10 Gbps classes.</li>
+            <li><strong>Splitters:</strong> Passive split ratios commonly 1:16 or 1:32 for GPON deployments.</li>
+            <li><strong>OSP:</strong> Use ducts, micro-trenching and aerial where appropriate; ensure splice points and testing rigs are documented.</li>
+          </ul>
+
+          <div style="margin-top:12px" class="meta">
+            <div class="mini"><i class="fas fa-tools"></i><div class="txt">Need OSP drawings, BOMs, or GPON planning templates? We can provide them.</div></div>
+          </div>
+        </div>
+
+        <div class="card reveal" style="margin-top:16px; text-align:center">
+          <h2 class="section">Sources & Notes</h2>
+          <p style="color:var(--muted); font-size:13px; margin-top:8px">This page summarizes industry practices, Pakistan deployments and local trends (operators such as Wateen, Zong Business, Cybernet and local FTTH projects). For exact vendor SLAs and the latest backbone projects consult official operator pages.</p>
+          <div style="margin-top:12px"><span class="badge">Localized • Up-to-date</span></div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      © 2025 McSOl • Designed for Faisalabad networks — All rights reserved.
+      <h3>Developed By: Muhammad Ammar Qaiser <br> +92 333 634 3160</h3>
+    </footer>
+  </div>
+
+  <!-- JavaScript: reveal on scroll, counter animation -->
+  <script>
+    // Simple reveal-on-scroll
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, {threshold: 0.14});
+    revealEls.forEach(el => observer.observe(el));
+
+    // Animated counters (numbers)
+    function animateCounter(el, to, duration=1400){
+      const isPercent = String(to).includes('.');
+      const start = 0;
+      const startTime = performance.now();
+      function tick(now){
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const ease = progress < 0.5 ? 2*progress*progress : -1 + (4 - 2*progress)*progress; // smooth
+        let val = start + (to - start)*ease;
+        if(isPercent){
+          el.textContent = Number(val).toFixed(1) + '%';
+        } else {
+          // if large, format
+          if(to >= 1000) el.textContent = Math.round(val).toLocaleString();
+          else el.textContent = Math.round(val);
+        }
+        if(progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+      document.querySelectorAll('.num').forEach(el=>{
+        const target = parseFloat(el.dataset.count || el.textContent.replace(/[^\d.]/g,''));
+        if(!isNaN(target)) animateCounter(el, target, 1400 + Math.random()*600);
+      });
+    });
+
+    // Subtle parallax of background plane on mouse move (for 3D feel)
+    const plane = document.querySelector('.plane');
+    if(plane && window.matchMedia('(pointer:fine)').matches){
+      window.addEventListener('mousemove', (e)=>{
+        const cx = window.innerWidth/2, cy = window.innerHeight/2;
+        const dx = (e.clientX - cx)/cx;
+        const dy = (e.clientY - cy)/cy;
+        const rotate = dx*6;
+        plane.style.transform = `translate(-50%,-50%) rotate(${12 + rotate*0.3}deg) translateZ(0)`;
+      });
+    }
+  </script>
+</body>
+</html>

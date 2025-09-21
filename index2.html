@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mediacom Group - About Us</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #f7f9fc;
+      color: #2c2c2c;
+      overflow-x: hidden;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    /* 3D Gradient Background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 25% 25%, #ffecd2, transparent 50%),
+                  radial-gradient(circle at 75% 75%, #d9f0ff, transparent 50%),
+                  radial-gradient(circle at 60% 20%, #e0d4ff, transparent 50%);
+      background-size: cover;
+      animation: moveBg 20s linear infinite alternate;
+      z-index: -1;
+    }
+
+    @keyframes moveBg {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-50px, -50px) scale(1.1); }
+      100% { transform: translate(50px, 50px) scale(1); }
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      padding: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: fadeInDown 1s ease-out;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+      color: #2563eb;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo i {
+      margin-right: 10px;
+      font-size: 32px;
+      color: #f97316;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+      animation: fadeIn 1.5s ease-out;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      background: linear-gradient(to right, #2563eb, #9333ea, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glow 3s infinite alternate;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto;
+      color: #4b5563;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 20px;
+    }
+
+    .timeline::after {
+      content: '';
+      position: absolute;
+      width: 6px;
+      background: linear-gradient(to bottom, #2563eb, #9333ea, #f97316);
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      margin-left: -3px;
+      border-radius: 10px;
+    }
+
+    .timeline-item {
+      padding: 10px 40px;
+      position: relative;
+      width: 50%;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s ease;
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .timeline-item:nth-child(odd) { left: 0; }
+    .timeline-item:nth-child(even) { left: 50%; }
+
+    .timeline-content {
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(15px);
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .timeline-content:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 15px 40px rgba(37, 99, 235, 0.25);
+    }
+
+    .timeline-content h2 {
+      color: #2563eb;
+      margin-bottom: 10px;
+      font-size: 1.5rem;
+    }
+
+    .timeline-content p {
+      color: #374151;
+    }
+
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: #2563eb;
+      border: 4px solid #fff;
+      border-radius: 50%;
+      top: 20px;
+      right: -10px;
+      z-index: 1;
+    }
+
+    .timeline-item:nth-child(even)::after {
+      left: -10px;
+      background: #f97316;
+    }
+
+    /* Services */
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin: 70px 0;
+    }
+
+    .service-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(15px);
+      border-radius: 15px;
+      padding: 25px;
+      text-align: center;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      opacity: 0;
+      transform: translateY(50px);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .service-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .service-card:hover {
+      transform: translateY(-12px) scale(1.03);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .service-icon {
+      font-size: 42px;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #2563eb, #9333ea, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .service-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+      color: #1f2937;
+    }
+
+    .service-card p {
+      color: #4b5563;
+    }
+
+    /* Stats */
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin: 70px 0;
+      text-align: center;
+    }
+
+    .stat-item {
+      padding: 20px;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.8s ease;
+    }
+
+    .stat-item.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #2563eb, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .stat-text {
+      font-size: 1.1rem;
+      color: #374151;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 0;
+      margin-top: 60px;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      color: #6b7280;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px rgba(37, 99, 235, 0.4); }
+      to { text-shadow: 0 0 25px rgba(249, 115, 22, 0.6); }
+    }
+
+    @media screen and (max-width: 768px) {
+      .timeline::after { left: 31px; }
+      .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
+      .timeline-item:nth-child(even) { left: 0; }
+      .timeline-item::after { left: 21px; }
+      .hero h1 { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Keep your same HTML content structure here -->
+  <!-- Keep your same HTML structure here -->
+
+  <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-satellite-dish"></i>
+                <span>Mediacom Group</span>
+            </div>
+        </header>
+
+        <section class="hero">
+            <h1>Connecting Futures Since 1995</h1>
+            <p>Mediacom Group provides services in several areas of public interest, operating various business ventures in Pakistan specializing in telecom, cable TV networks, internet services, and real estate.</p>
+        </section>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h2>Our Beginning</h2>
+                    <p>Since 1995, Mediacom Group has been providing services in several areas of public interest. The group operates various business ventures in Pakistan, specializing in telecom, cable TV networks (digital and analog), internet services, and real estate.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h2>Mcsol Subsidiary</h2>
+                    <p>A subsidiary of Mediacom, Mcsol is a pioneer in optical fiber infrastructure, TV network services (digital and analog), and high-speed internet in Faisalabad.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h2>Industry Leadership</h2>
+                    <p>With over 500,000 Cable TV and 30,000 FTTH happy subscribers, Mcsol stands as a leader in the industry. Our technical expertise, experience, and comprehensive knowledge of business solutions ensure seamless applications through a single-window operation.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h2>Engineering Services</h2>
+                    <p>We offer total Outside Plant (OSP) engineering services, including planning, design, project management, splicing, testing, and commissioning of Fiber optic networks.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="services">
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-broadcast-tower"></i>
+                </div>
+                <h3>Fiber & Wireless Connectivity</h3>
+                <p>Point to Point and Point to Multipoint Fiber & Wireless Connectivity solutions catering to specific needs and constraints.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-fiber"></i>
+                </div>
+                <h3>Dark Core Connectivity</h3>
+                <p>Specialized networking architecture utilizing dark fiber strands for high-speed, dedicated communication links.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-server"></i>
+                </div>
+                <h3>Data Center Services</h3>
+                <p>State-of-the-art Data Centre and Server Co-Location Services in Faisalabad eliminating the need for companies to invest in infrastructure.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h3>FTTH Services</h3>
+                <p>High-speed broadband services in Faisalabad and its suburbs with unlimited data packages and unparalleled internet speeds.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-tachometer-alt"></i>
+                </div>
+                <h3>Bandwidth & CDN</h3>
+                <p>We fulfill bandwidth requirements, whether raw or mixed with CDNs, dealing in both asymmetric and symmetric bandwidths.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <h3>Dealer's Panel ISP</h3>
+                <p>Our Dealer Panel ISP Services, powered by Transworld TCL and Zong, offer robust unlimited data packages with lightning-fast internet speed.</p>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">500,000+</div>
+                <div class="stat-text">Cable TV Subscribers</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">30,000+</div>
+                <div class="stat-text">FTTH Happy Subscribers</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">99.9%</div>
+                <div class="stat-text">Uptime Guarantee</div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2025 McSOL. All rights reserved.</p>
+            <h3>Developed By: Muhammad Ammar Qaiser <br> +92 333 634 3160</h3>
+        </footer>
+    </div>
+
+    <script>
+        // Function to check if element is in viewport
+        function isInViewport(element) {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        // Function to add visible class to elements in viewport
+        function checkVisibility() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const serviceCards = document.querySelectorAll('.service-card');
+            const statItems = document.querySelectorAll('.stat-item');
+
+            timelineItems.forEach(item => {
+                if (isInViewport(item)) {
+                    item.classList.add('visible');
+                }
+            });
+
+            serviceCards.forEach(card => {
+                if (isInViewport(card)) {
+                    card.classList.add('visible');
+                }
+            });
+
+            statItems.forEach(item => {
+                if (isInViewport(item)) {
+                    item.classList.add('visible');
+                }
+            });
+        }
+
+        // Check visibility on load and scroll
+        window.addEventListener('load', checkVisibility);
+        window.addEventListener('scroll', checkVisibility);
+
+        // Initial check
+        checkVisibility();
+    </script>
+</body>
+</html>
+
